@@ -69,7 +69,7 @@ class Line_API:
         data = None
         with open("flex_example.json", "r") as file:
             data = json.load(file)
-        response = requests.post(self.base_url+"broadcast", headers=self.headers, json={
+        data_set = {
             "messages": [
                 {
                     "type": "flex",
@@ -77,7 +77,8 @@ class Line_API:
                     "contents": data
                 }
             ]
-        })
+        }
+        response = requests.post(self.base_url+"broadcast", headers=self.headers, data=json.dumps(data_set))
         self.resulter(response)
         print(response.json())
 
