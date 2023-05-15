@@ -16,5 +16,5 @@
 
 ## api_tester.py
 測試message API的各項基本功能
-1. python3 broadcast.py
+1. python3 api_tester.py
 
