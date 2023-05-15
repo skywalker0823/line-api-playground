@@ -4,12 +4,6 @@ dotenv.load_dotenv()
 
 CHANNEL_ACCESS_TOKEN = os.getenv('Test_Access_Token')
 
-options = {
-    "1": "broadcast",
-    "2": "push",
-    "3": "reply"
-}
-
 class Line_API:
     def __init__(self):
         self.base_url = "https://api.line.me/v2/bot/message/"
@@ -20,6 +14,8 @@ class Line_API:
         self.data_set = {"messages": []}
     
     def reply_message(self, reply_token=None, text=None):
+        text = input("Enter your message: ")
+        reply_token = input("Enter reply token: ")
         self.data_set["replyToken"] = reply_token
         self.data_set["messages"].append({
             "type": "text",
@@ -29,6 +25,7 @@ class Line_API:
         self.resulter(response)
 
     def broadcast_message(self, text=None):
+        text = input("Enter your message: ")
         self.data_set["messages"].append({
             "type": "text",
             "text": text
@@ -36,7 +33,19 @@ class Line_API:
         response = requests.post(self.base_url+"broadcast", data=json.dumps(self.data_set), headers=self.headers)
         self.resulter(response)
 
+    def broadcast_image(self, image_url=None):
+        image_url = input("Enter image url: ")
+        self.data_set["messages"].append({
+            "type": "image",
+            "originalContentUrl": image_url,
+            "previewImageUrl": image_url
+        })
+        response = requests.post(self.base_url+"broadcast", data=json.dumps(self.data_set), headers=self.headers)
+        self.resulter(response)
+
     def push_message(self, text=None, user_id=None):
+        text = input("Enter your message: ")
+        user_id = input("Enter user id: ")
         self.data_set["to"] = user_id
         self.data_set["messages"].append({
             "type": "text",
@@ -51,8 +60,8 @@ class Line_API:
         print(response.json())
     
     def get_broadcast_count(self, date=None):
-        self.date = date
-        response = requests.get(self.base_url+f"delivery/broadcast?date={self.date}", headers=self.headers)
+        date = input("Enter date(YYYYMMDD): ")
+        response = requests.get(self.base_url+f"delivery/broadcast?date={date}", headers=self.headers)
         self.resulter(response)
         print(response.json())
 
@@ -60,14 +69,29 @@ class Line_API:
         if response.status_code != 200:
             print("Error broadcasting message: ", response.status_code, response.text)
         else:
-            print("\nMessage broadcasted successfully!\n")
+            print("\nMessage broadcasted successfully! = w =\n")
     
+    def quit(self):
+        print("Good bye")
+        exit(0)
 
-
+    def invalid(self):
+        print("Invalid selection")
+        pass
 
 def run():
+    line = Line_API()
+    options = {
+        "1": line.broadcast_message,
+        "2": line.push_message,
+        "3": line.reply_message,
+        "4": line.get_quota,
+        "5": line.get_broadcast_count,
+        "6": line.broadcast_image,
+        "q": line.quit,
+        "Q": line.quit
+    }
     while True:
-        line = Line_API()
         select = input(
             """
                 Enter your selection:
@@ -76,33 +100,11 @@ def run():
                     3. reply(Send message by a replyToken)
                     4. get quota
                     5. get broacast count
-                    Q. Quit\n
+                    6. broadcast image
+                    Q/q. Quit\n
             """
         )
-        if select == "1":
-            inputer = input("Enter your message: ")
-            line.broadcast_message(inputer)
-        elif select == "2":
-            inputer = input("Enter your message: ")
-            user_id = input("Enter user id: ")
-            line.push_message(inputer, user_id)
-        elif select == "3":
-            inputer = input("Enter your message: ")
-            reply_token = input("Enter reply token: ")
-            line.reply_message(reply_token, inputer)
-        elif select == "4":
-            line.get_quota()
-        elif select == "5":
-            date = input("Enter date(YYYYMMDD): ")
-            line.get_broadcast_count(date)
-        elif select == "q" or select == "Q":
-            print("Good bye")
-            break
-        else:
-            print("Wrong selection!")
-            pass
-
-
+        options.get(select, line.invalid)()
 
 if __name__ == "__main__":
     run()

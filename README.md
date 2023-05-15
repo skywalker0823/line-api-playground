@@ -12,6 +12,7 @@
 測試回應 webhook 事件
 1. uvicorn main:app --reload --port 5000
 2. (Open another terminal)ngrok http 5000
+3. 將 ngrok 給的連結填入 https://developers.line.biz/console/channel/{你的CHANNEL}/messaging-api 的 Webhook URL 並測試
 
 ## broadcast.py
 測試message API的各項基本功能
