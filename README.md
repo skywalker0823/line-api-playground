@@ -1,9 +1,9 @@
 # Line API playground
-希望能夠透過這個專案，讓大家可以更快速的了解 Line API 的使用方式。
+希望能夠透過這個專案，可以更快速的了解 Line API 的使用方式。
 
 ## 設置
-1. 申請 https://developers.line.biz/console/ 的帳號，你要自建立一個 Channel後 取得 `Channel access token` 這裡不多說明，請參考 https://developers.line.biz/en/docs/messaging-api/getting-started/
-2. git clone && cd line-api-playground
+1. 申請 https://developers.line.biz/console/ 的帳號，你要建立一個 Channel後 取得 `Channel access token` 這裡不多說明，請參考 https://developers.line.biz/en/docs/messaging-api/getting-started/
+2. git clone https://github.com/skywalker0823/line-api-playground.git && cd line-api-playground
 3. cp .env.example .env
 4. 修改 .env 的內容，填入你的 `Channel access token`
 5. pip install -r requirements.txt
