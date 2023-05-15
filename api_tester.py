@@ -64,12 +64,29 @@ class Line_API:
         response = requests.get(self.base_url+f"delivery/broadcast?date={date}", headers=self.headers)
         self.resulter(response)
         print(response.json())
+    
+    def flex_message(self):
+        data = None
+        with open("flex_example.json", "r") as file:
+            data = json.load(file)
+        response = requests.post(self.base_url+"broadcast", headers=self.headers, json={
+            "messages": [
+                {
+                    "type": "flex",
+                    "altText": "Flex Message",
+                    "contents": data
+                }
+            ]
+        })
+        self.resulter(response)
+        print(response.json())
 
     def resulter(self, response):
         if response.status_code != 200:
             print("Error broadcasting message: ", response.status_code, response.text)
         else:
             print("\nMessage broadcasted successfully! = w =\n")
+            
     
     def quit(self):
         print("Good bye")
@@ -88,6 +105,7 @@ def run():
         "4": line.get_quota,
         "5": line.get_broadcast_count,
         "6": line.broadcast_image,
+        "7": line.flex_message,
         "q": line.quit,
         "Q": line.quit
     }
@@ -101,6 +119,7 @@ def run():
                     4. get quota
                     5. get broacast count
                     6. broadcast image
+                    7. flex message
                     Q/q. Quit\n
             """
         )
