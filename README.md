@@ -3,10 +3,19 @@
 
 ## 設置
 1. 申請 https://developers.line.biz/console/ 的帳號，你要建立一個 Channel後 取得 `Channel access token` 這裡不多說明，請參考 https://developers.line.biz/en/docs/messaging-api/getting-started/
-2. git clone https://github.com/skywalker0823/line-api-playground.git && cd line-api-playground
-3. cp .env.example .env
+2. clone this repo then cd line-api-playground.
+```bash 
+git clone https://github.com/skywalker0823/line-api-playground.git && cd line-api-playground
+```
+3. copy .env.example to .env
+```bash
+cp .env.example .env
+```
 4. 修改 .env 的內容，填入你的 `Channel access token`
-5. pip install -r requirements.txt
+5. Install requirements
+```bash
+pip install -r requirements.txt
+```
 
 ## main.py
 測試回應 webhook 事件

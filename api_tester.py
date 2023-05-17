@@ -88,12 +88,13 @@ class Line_API:
         else:
             print("\nMessage broadcasted successfully! = w =\n")
             
-    
-    def quit(self):
+    @staticmethod
+    def quit():
         print("Good bye")
         exit(0)
 
-    def invalid(self):
+    @staticmethod
+    def invalid():
         print("Invalid selection")
         pass
 
