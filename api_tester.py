@@ -86,11 +86,11 @@ class Line_API:
         if response.status_code != 200:
             print("Error broadcasting message: ", response.status_code, response.text)
         else:
-            print("\nMessage broadcasted successfully! = w =\n")
+            print("\nSUCCESS! = w =\n")
             
     @staticmethod
     def quit():
-        print("Good bye")
+        print("Good bye ヾ(￣▽￣)")
         exit(0)
 
     @staticmethod
